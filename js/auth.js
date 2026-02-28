@@ -1,18 +1,16 @@
 // conflict with the globally imported `supabase` object from the CDN script.
 const SUPABASE_URL = 'https://rnfijxarifgdejqblfti.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJuZmlqeGFyaWZnZGVqcWJsZnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMTIyMTMsImV4cCI6MjA4Nzc4ODIxM30.msQZ6ZuXadqaEwbXkewsurRKO1qXyWdYchdKz76eRqk';
+const SUPABASE_ANON_KEY = 'your_key_here'; 
 
-// FIX: Use `_supabaseClient` instead of `supabase` to avoid name clash with CDN global
 let _supabaseClient = null;
-let currentUser = null;
 
 function initSupabase() {
-  // FIX: The CDN exposes `window.supabase` as the namespace, so we call
-  // `window.supabase.createClient(...)` — NOT `Supabase.createClient`
   try {
+    // This connects your public site to your live Supabase database
     _supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log("Connected to Public Supabase Instance");
   } catch(e) {
-    console.warn('Supabase init failed:', e);
+    console.error('Connection failed:', e);
   }
 }
 
