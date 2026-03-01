@@ -21,71 +21,64 @@
   <div id="loginOverlay">
     <div class="login-box">
       <div class="login-logo">
-        <div class="login-logo-mark">
-          <img src="assets/logo.jpg" alt="PeriAI logo"
-            style="width:36px;height:36px;object-fit:cover;border-radius:10px;display:block">
-        </div>
         <div class="login-logo-text">
           <span class="brand-main">PeriAI</span>
-          <span class="brand-sub">Perimenopause Companion</span>
+          <span class="brand-sub">Cardiovascular Companion</span>
         </div>
       </div>
-      <div class="login-title">Peri<span>AI</span></div>
+      <div class="login-tabs">
+        <button class="login-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="login-tab" id="tabSignup" onclick="switchAuthTab('signup')">Create Account</button>
+      </div>
+      <div id="loginError" class="login-error"></div>
+      <!-- Sign In form -->
+      <div id="formLogin">
+        <div class="login-field">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email"
+            onkeydown="if(event.key==='Enter')document.getElementById('loginPassword').focus()">
+        </div>
+        <div class="login-field">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password"
+            onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <button class="login-btn" onclick="doLogin()">Sign In</button>
+      </div>
+      <!-- Sign Up form -->
+      <div id="formSignup" style="display:none">
+        <div class="login-field">
+          <label>Your Name</label>
+          <input type="text" id="signupName" placeholder="First name">
+        </div>
+        <div class="login-field">
+          <label>Email</label>
+          <input type="email" id="signupEmail" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <div class="login-field">
+          <label>Password <span style="font-weight:500;color:var(--text-lt)">(min. 6 characters)</span></label>
+          <input type="password" id="signupPassword" placeholder="Create a password" autocomplete="new-password">
+        </div>
+        <div class="login-field">
+          <label>Confirm Password</label>
+          <input type="password" id="signupConfirm" placeholder="Repeat your password" autocomplete="new-password"
+            onkeydown="if(event.key==='Enter')doSignup()">
+        </div>
+        <button class="login-btn" onclick="doSignup()">Create Account</button>
+      </div>
     </div>
-    <div class="login-tabs">
-      <button class="login-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
-      <button class="login-tab" id="tabSignup" onclick="switchAuthTab('signup')">Create Account</button>
-    </div>
-    <div id="loginError" class="login-error"></div>
-    <!-- Sign In form -->
-    <div id="formLogin">
-      <div class="login-field">
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email"
-          onkeydown="if(event.key==='Enter')document.getElementById('loginPassword').focus()">
-      </div>
-      <div class="login-field">
-        <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password"
-          onkeydown="if(event.key==='Enter')doLogin()">
-      </div>
-      <button class="login-btn" onclick="doLogin()">Sign In</button>
-    </div>
-    <!-- Sign Up form -->
-    <div id="formSignup" style="display:none">
-      <div class="login-field">
-        <label>Your Name</label>
-        <input type="text" id="signupName" placeholder="First name">
-      </div>
-      <div class="login-field">
-        <label>Email</label>
-        <input type="email" id="signupEmail" placeholder="you@email.com" autocomplete="email">
-      </div>
-      <div class="login-field">
-        <label>Password <span style="font-weight:500;color:var(--text-lt)">(min. 6 characters)</span></label>
-        <input type="password" id="signupPassword" placeholder="Create a password" autocomplete="new-password">
-      </div>
-      <div class="login-field">
-        <label>Confirm Password</label>
-        <input type="password" id="signupConfirm" placeholder="Repeat your password" autocomplete="new-password"
-          onkeydown="if(event.key==='Enter')doSignup()">
-      </div>
-      <button class="login-btn" onclick="doSignup()">Create Account</button>
-    </div>
-  </div>
   </div>
 
   <!-- HEADER -->
   <header class="topbar">
     <div class="logo-wrap" onclick="goTo('home')">
-      <img src="assets/logo.jpg" alt="PeriAI logo"
-        style="width:38px;height:38px;object-fit:cover;border-radius:50%;display:block;flex-shrink:0">
       <div>
         <div class="logo-text">Peri<span class="ai-part">AI</span></div>
-        <div class="logo-tagline">Perimenopause Companion</div>
+        <div class="logo-tagline">Cardiovascular Companion</div>
       </div>
     </div>
   </header>
+
 
   <nav class="nav-tabs">
     <button class="tab-btn active" id="tab-home" onclick="goTo('home')">Home</button>
@@ -107,7 +100,6 @@
     <button class="btn-sm-s" style="font-size:0.75rem;padding:0.4rem 0.9rem" onclick="doLogout()">Sign Out</button>
     <button class="btn-cta" onclick="goTo('ai')">Start Session</button>
   </div>
-  </header>
 
   <!-- APP BODY -->
   <div id="app">
