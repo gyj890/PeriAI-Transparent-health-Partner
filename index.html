@@ -614,79 +614,83 @@
       </div>
     </div>
 
-  </div><!-- end #app -->
 
-  <!-- RISK ANALYSIS -->
-  <div class="section" id="sec-risk" style="display:none">
-    <div class="page-wrap" style="max-width:900px">
-      <h1 class="page-title">Risk <em>Analysis</em></h1>
-      <p class="page-sub">Your cardiovascular risk score combines your clinical profile with symptom signals from your
-        Peri conversations.</p>
-      <div id="riskRunWrap" style="text-align:center;padding:2rem 0 1rem">
-        <button class="btn-primary" style="font-size:1rem;padding:0.9rem 2.5rem" onclick="runRiskAnalysis()">Calculate
-          My Risk Score</button>
-        <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-lt);font-weight:600">Uses your saved profile and
-          symptom log. All computation happens in your browser.</p>
-      </div>
-      <div id="riskResults" style="display:none">
-        <div style="display:grid;grid-template-columns:260px 1fr;gap:1.6rem;margin-bottom:1.6rem;align-items:start">
-          <div class="risk-card" style="text-align:center;padding:1.8rem 1rem">
-            <div
-              style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:1rem">
-              Overall Risk Score</div>
-            <canvas id="gaugeCanvas" width="220" height="130" style="display:block;margin:0 auto"></canvas>
-            <div id="gaugeScore"
-              style="font-size:2.8rem;font-weight:900;margin-top:0.5rem;font-family:'Playfair Display',serif"></div>
-            <div id="gaugePct" style="font-size:0.8rem;font-weight:700;color:var(--text-lt);margin-bottom:0.4rem"></div>
-            <div id="gaugeLabel"
-              style="display:inline-block;font-size:0.78rem;font-weight:800;padding:0.3rem 1rem;border-radius:50px;letter-spacing:0.05em">
+
+    <!-- RISK ANALYSIS -->
+    <div class="section" id="sec-risk" style="display:none">
+      <div class="page-wrap" style="max-width:900px">
+        <h1 class="page-title">Risk <em>Analysis</em></h1>
+        <p class="page-sub">Your cardiovascular risk score combines your clinical profile with symptom signals from your
+          Peri conversations.</p>
+        <div id="riskRunWrap" style="text-align:center;padding:2rem 0 1rem">
+          <button class="btn-primary" style="font-size:1rem;padding:0.9rem 2.5rem" onclick="runRiskAnalysis()">Calculate
+            My Risk Score</button>
+          <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--text-lt);font-weight:600">Uses your saved profile
+            and
+            symptom log. All computation happens in your browser.</p>
+        </div>
+        <div id="riskResults" style="display:none">
+          <div style="display:grid;grid-template-columns:260px 1fr;gap:1.6rem;margin-bottom:1.6rem;align-items:start">
+            <div class="risk-card" style="text-align:center;padding:1.8rem 1rem">
+              <div
+                style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:1rem">
+                Overall Risk Score</div>
+              <canvas id="gaugeCanvas" width="220" height="130" style="display:block;margin:0 auto"></canvas>
+              <div id="gaugeScore"
+                style="font-size:2.8rem;font-weight:900;margin-top:0.5rem;font-family:'Playfair Display',serif"></div>
+              <div id="gaugePct" style="font-size:0.8rem;font-weight:700;color:var(--text-lt);margin-bottom:0.4rem">
+              </div>
+              <div id="gaugeLabel"
+                style="display:inline-block;font-size:0.78rem;font-weight:800;padding:0.3rem 1rem;border-radius:50px;letter-spacing:0.05em">
+              </div>
+            </div>
+            <div class="risk-card">
+              <div
+                style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:1rem">
+                Score Breakdown</div>
+              <div id="breakdownBars"></div>
+              <div
+                style="margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.78rem;color:var(--text-lt);line-height:1.7">
+                <strong style="color:var(--text-m)">How this is calculated:</strong> Your structural risk is computed
+                using a logistic regression model. Symptom signals reported to Peri adjust the final score by up to 20
+                points.
+              </div>
             </div>
           </div>
-          <div class="risk-card">
-            <div
-              style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:1rem">
-              Score Breakdown</div>
-            <div id="breakdownBars"></div>
-            <div
-              style="margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.78rem;color:var(--text-lt);line-height:1.7">
-              <strong style="color:var(--text-m)">How this is calculated:</strong> Your structural risk is computed
-              using a logistic regression model. Symptom signals reported to Peri adjust the final score by up to 20
-              points.
+          <div class="risk-card" style="margin-bottom:1.6rem">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.2rem">
+              <div
+                style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt)">
+                Symptom Contributions</div>
+              <div style="font-size:0.72rem;font-weight:600;color:var(--text-lt)" id="symptomChartNote"></div>
             </div>
+            <div id="symptomBars"></div>
           </div>
-        </div>
-        <div class="risk-card" style="margin-bottom:1.6rem">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1.2rem">
+          <div class="risk-card" style="margin-bottom:1.6rem">
             <div
-              style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt)">
-              Symptom Contributions</div>
-            <div style="font-size:0.72rem;font-weight:600;color:var(--text-lt)" id="symptomChartNote"></div>
+              style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:1.2rem">
+              Clinical Risk Factors</div>
+            <canvas id="radarCanvas" width="420" height="280"
+              style="display:block;margin:0 auto;max-width:100%"></canvas>
           </div>
-          <div id="symptomBars"></div>
+          <div class="risk-card" id="riskExplain" style="margin-bottom:1.6rem"></div>
+          <div class="risk-card" id="riskRecs"></div>
+          <div class="disclaimer-card" style="margin-top:1.4rem">
+            <strong>This is not a medical diagnosis</strong>
+            <p>This risk score is an educational tool based on population-level data. It cannot diagnose cardiovascular
+              disease. Always discuss your results with a qualified healthcare provider.</p>
+          </div>
         </div>
-        <div class="risk-card" style="margin-bottom:1.6rem">
-          <div
-            style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:1.2rem">
-            Clinical Risk Factors</div>
-          <canvas id="radarCanvas" width="420" height="280" style="display:block;margin:0 auto;max-width:100%"></canvas>
+        <div id="riskEmpty" style="display:none;text-align:center;padding:3rem 1rem">
+          <div style="font-size:0.9rem;font-weight:700;color:var(--text-m);margin-bottom:0.5rem">Complete your profile
+            first</div>
+          <div style="font-size:0.82rem;color:var(--text-lt);margin-bottom:1.5rem">Age, blood pressure, and cholesterol
+            are required to calculate your risk score.</div>
+          <button class="btn-primary" onclick="goTo('profile')">Go to My Profile</button>
         </div>
-        <div class="risk-card" id="riskExplain" style="margin-bottom:1.6rem"></div>
-        <div class="risk-card" id="riskRecs"></div>
-        <div class="disclaimer-card" style="margin-top:1.4rem">
-          <strong>This is not a medical diagnosis</strong>
-          <p>This risk score is an educational tool based on population-level data. It cannot diagnose cardiovascular
-            disease. Always discuss your results with a qualified healthcare provider.</p>
-        </div>
-      </div>
-      <div id="riskEmpty" style="display:none;text-align:center;padding:3rem 1rem">
-        <div style="font-size:0.9rem;font-weight:700;color:var(--text-m);margin-bottom:0.5rem">Complete your profile
-          first</div>
-        <div style="font-size:0.82rem;color:var(--text-lt);margin-bottom:1.5rem">Age, blood pressure, and cholesterol
-          are required to calculate your risk score.</div>
-        <button class="btn-primary" onclick="goTo('profile')">Go to My Profile</button>
       </div>
     </div>
-  </div>
+  </div><!-- end #app -->
 
   <!-- FOOTER -->
   <footer class="site-footer">
