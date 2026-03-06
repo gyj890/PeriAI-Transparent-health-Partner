@@ -1,6 +1,6 @@
 // conflict with the globally imported `supabase` object from the CDN script.
 const SUPABASE_URL = 'https://rnfijxarifgdejqblfti.supabase.co';
-const SUPABASE_ANON_KEY = 'your_key_here'; 
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJuZmlqeGFyaWZnZGVqcWJsZnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyMTIyMTMsImV4cCI6MjA4Nzc4ODIxM30.msQZ6ZuXadqaEwbXkewsurRKO1qXyWdYchdKz76eRqk';
 
 let _supabaseClient = null;
 
@@ -9,7 +9,7 @@ function initSupabase() {
     // This connects your public site to your live Supabase database
     _supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     console.log("Connected to Public Supabase Instance");
-  } catch(e) {
+  } catch (e) {
     console.error('Connection failed:', e);
   }
 }
@@ -27,24 +27,24 @@ function clearAuthError() {
 
 function switchAuthTab(tab) {
   clearAuthError();
-  document.getElementById('tabLogin').classList.toggle('active',  tab === 'login');
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
   document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
-  document.getElementById('formLogin').style.display  = tab === 'login'  ? '' : 'none';
+  document.getElementById('formLogin').style.display = tab === 'login' ? '' : 'none';
   document.getElementById('formSignup').style.display = tab === 'signup' ? '' : 'none';
 }
 
 // ── SIGN UP ─────────────────────────────────────────────────
 async function doSignup() {
   clearAuthError();
-  const name    = (document.getElementById('signupName').value    || '').trim();
-  const email   = (document.getElementById('signupEmail').value   || '').trim().toLowerCase();
-  const pass    =  document.getElementById('signupPassword').value;
-  const confirm =  document.getElementById('signupConfirm').value;
+  const name = (document.getElementById('signupName').value || '').trim();
+  const email = (document.getElementById('signupEmail').value || '').trim().toLowerCase();
+  const pass = document.getElementById('signupPassword').value;
+  const confirm = document.getElementById('signupConfirm').value;
 
-  if (!name)                         { showAuthError('Please enter your name.'); return; }
+  if (!name) { showAuthError('Please enter your name.'); return; }
   if (!email || !email.includes('@')) { showAuthError('Please enter a valid email address.'); return; }
-  if (pass.length < 6)               { showAuthError('Password must be at least 6 characters.'); return; }
-  if (pass !== confirm)              { showAuthError('Passwords do not match.'); return; }
+  if (pass.length < 6) { showAuthError('Password must be at least 6 characters.'); return; }
+  if (pass !== confirm) { showAuthError('Passwords do not match.'); return; }
 
   setBtnState('signupSubmitBtn', true, 'Creating account…');
 
@@ -70,8 +70,8 @@ async function doSignup() {
 // ── SIGN IN ─────────────────────────────────────────────────
 async function doLogin() {
   clearAuthError();
-  const email = (document.getElementById('loginEmail').value  || '').trim().toLowerCase();
-  const pass  =  document.getElementById('loginPassword').value;
+  const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
+  const pass = document.getElementById('loginPassword').value;
   if (!email || !pass) { showAuthError('Please enter your email and password.'); return; }
 
   setBtnState('loginSubmitBtn', true, 'Signing in…');
@@ -105,25 +105,25 @@ async function enterApp(user) {
 
   if (prof) {
     profile = {
-      name:         prof.name          || displayName,
-      age:          prof.age           ? String(prof.age) : '',
-      heightCm:     prof.height_cm     ? String(prof.height_cm) : '',
-      weightKg:     prof.weight_kg     ? String(prof.weight_kg) : '',
-      gender:       prof.gender        || '',
-      systolic:     prof.systolic      ? String(prof.systolic) : '',
-      diastolic:    prof.diastolic     ? String(prof.diastolic) : '',
-      cholesterol:  prof.cholesterol   || '',
-      glucose:      prof.glucose       || '',
-      smoking:      prof.smoking       || '',
-      alcohol:      prof.alcohol       || '',
+      name: prof.name || displayName,
+      age: prof.age ? String(prof.age) : '',
+      heightCm: prof.height_cm ? String(prof.height_cm) : '',
+      weightKg: prof.weight_kg ? String(prof.weight_kg) : '',
+      gender: prof.gender || '',
+      systolic: prof.systolic ? String(prof.systolic) : '',
+      diastolic: prof.diastolic ? String(prof.diastolic) : '',
+      cholesterol: prof.cholesterol || '',
+      glucose: prof.glucose || '',
+      smoking: prof.smoking || '',
+      alcohol: prof.alcohol || '',
       physActivity: prof.phys_activity || '',
-      cardio:       prof.cardio        || '',
-      menStatus:    prof.men_status    || '',
-      lastPeriod:   prof.last_period   || '',
-      meds:         prof.meds          || '',
-      conditions:   prof.conditions    || [],
-      famHistory:   prof.fam_history   || '',
-      doctor:       prof.doctor        || '',
+      cardio: prof.cardio || '',
+      menStatus: prof.men_status || '',
+      lastPeriod: prof.last_period || '',
+      meds: prof.meds || '',
+      conditions: prof.conditions || [],
+      famHistory: prof.fam_history || '',
+      doctor: prof.doctor || '',
     };
   } else {
     profile = { name: displayName };
@@ -161,8 +161,8 @@ async function enterApp(user) {
   document.getElementById('loginOverlay').style.display = 'none';
 
   setTimeout(() => {
-    try { buildCondGrid(); } catch(e) {}
-    try { updateStats();   } catch(e) {}
+    try { buildCondGrid(); } catch (e) { }
+    try { updateStats(); } catch (e) { }
   }, 50);
 }
 
@@ -182,10 +182,10 @@ async function saveSymptomLog() {
   const rows = Object.entries(symptomLog)
     .filter(([, v]) => v && v.severity && v.severity !== 'none')
     .map(([symptom_id, v]) => ({
-      user_id:     currentUser.id,
+      user_id: currentUser.id,
       symptom_id,
-      severity:    v.severity || null,
-      freq:        v.freq     || null,
+      severity: v.severity || null,
+      freq: v.freq || null,
       logged_date: new Date().toISOString().split('T')[0],
     }));
   if (!rows.length) return;
