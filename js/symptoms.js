@@ -7,15 +7,15 @@ const SYMPTOMS = [
   { id: 'mood', name: 'Mood Changes', icon: '', sub: 'Irritability, anxiety, sadness' },
   { id: 'brain_fog', name: 'Brain Fog / Memory', icon: '', sub: 'Forgetfulness, poor concentration' },
   { id: 'periods', name: 'Irregular Periods', icon: '', sub: 'Missed, heavy, or spotting' },
-  { id: 'chest_pain', name: 'Chest Discomfort', icon: '', sub: 'Dryness, discomfort, painful sex' },
-  { id: 'breathless', name: 'Shortness of Breath', icon: '', sub: 'Reduced sexual desire' },
-  { id: 'dizziness', name: 'Fainting', icon: '', sub: 'Aches, stiffness, joint pain' },
+  { id: 'chest_pain', name: 'Chest Discomfort', icon: '', sub: 'Tightness, pressure, or squeezing in chest' },
+  { id: 'breathless', name: 'Shortness of Breath', icon: '', sub: 'Breathless during normal or light activity' },
+  { id: 'dizziness', name: 'Fainting', icon: '', sub: 'Lightheaded, faint, or spinning sensation' },
   { id: 'headaches', name: 'Headaches', icon: '', sub: 'Frequency or severity changes' },
   { id: 'weight', name: 'Weight / Bloating', icon: '', sub: 'Unexplained weight gain, bloating' },
   { id: 'fatigue', name: 'Fatigue', icon: '', sub: 'Persistent tiredness, low energy' },
   { id: 'palp', name: 'Heart Palpitations', icon: '', sub: 'Racing, fluttering, irregular heartbeat' },
-  { id: 'swelling', name: 'Leg Swelling', icon: '', sub: 'Urgency, leaking, frequent UTIs' },
-  { id: 'nausea', name: 'Nausea ', icon: '', sub: 'Dryness, thinning hair, acne' },
+  { id: 'swelling', name: 'Leg Swelling', icon: '', sub: 'Fluid buildup in legs, ankles or feet' },
+  { id: 'nausea', name: 'Nausea ', icon: '', sub: 'Unexplained nausea or stomach discomfort' },
 ];
 
 const KWDS = {

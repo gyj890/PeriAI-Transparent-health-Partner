@@ -23,7 +23,7 @@ const SCALER_MEAN = [53.226, 0.652, 164.177, 72.552, 27.043, 120.599, 77.427, 1.
 const SCALER_STD = [6.701, 0.476, 8.472, 14.266, 5.591, 16.116, 11.716, 0.562, 0.401, 0.284, 0.218, 0.400, 9.547, 12.563, 1.186, 350.487, 69.401, 0.834, 0.322, 0.355, 0.349, 0.364, 0.364, 0.326, 0.338, 0.335, 0.354, 0.334, 0.320, 0.335, 0.157];
 
 // Gradient Boosting feature importances (for visualisation)
-const GB_FEATURE_IMPORTANCE = { age: 0.063, gender: 0.001, height: 0.011, weight: 0.028, bmi: 0.042, ap_hi: 0.148, ap_lo: 0.045, cholesterol: 0.043, gluc: 0.006, smoke: 0.005, alco: 0.001, active: 0.007, pp: 0.029, map_press: 0.162, bp_stage: 0.019, age_x_bmi: 0.099, age_x_bp: 0.177, chol_gluc: 0.043, sym_palp: 0.011, sym_hot_flashes: 0.004, sym_night_sweats: 0.002, sym_sleep: 0.002, sym_fatigue: 0.003, sym_headaches: 0.002, sym_mood: 0.002, sym_brain_fog: 0.002, sym_weight: 0.002, sym_joints: 0.002, sym_urinary: 0.002, sym_periods: 0.003, sym_composite: 0.034 };
+const GB_FEATURE_IMPORTANCE = { age: 0.063, gender: 0.001, height: 0.011, weight: 0.028, bmi: 0.042, ap_hi: 0.148, ap_lo: 0.045, cholesterol: 0.043, gluc: 0.006, smoke: 0.005, alco: 0.001, active: 0.007, pp: 0.029, map_press: 0.162, bp_stage: 0.019, age_x_bmi: 0.099, age_x_bp: 0.177, chol_gluc: 0.043, sym_palp: 0.011, sym_hot_flashes: 0.004, sym_night_sweats: 0.002, sym_sleep: 0.002, sym_fatigue: 0.003, sym_headaches: 0.002, sym_mood: 0.002, sym_brain_fog: 0.002, sym_weight: 0.002, sym_chest_pain: 0.009, sym_breathless: 0.007, sym_dizziness: 0.004, sym_swelling: 0.004, sym_nausea: 0.003, sym_periods: 0.003, sym_composite: 0.034 };
 
 const OPTIMAL_THRESHOLD = 0.0712;
 
@@ -65,7 +65,9 @@ function buildMLFeatureVector(p, symLog) {
   const ssw = ss('swelling');     // ← NEW
   const snz = ss('nausea');       // ← NEW
   const spr = ss('periods');
-  const sc = 0.35 * sp + 0.18 * shf + 0.14 * sns + 0.12 * ssl + 0.10 * sf + 0.08 * shd + 0.06 * smo + 0.06 * sbf + 0.05 * swt + 0.04 * scp + 0.20 * sbr + 0.15 * sdz + 0.12 * ssw + 0.10 * snz + 0.08 * spr;
+  const sc = 0.35 * sp + 0.20 * scp + 0.15 * sbr + 0.12 * sdz + 0.10 * ssw
+    + 0.08 * snz + 0.18 * shf + 0.14 * sns + 0.12 * ssl + 0.10 * sf
+    + 0.08 * shd + 0.06 * smo + 0.06 * sbf + 0.05 * swt + 0.04 * spr;
   return [age, gen, ht, wt, bmi, apH, apL, chol, gluc, smk, alc, act, pp, mp, bps, age * bmi, age * bps, chol * gluc, sp, shf, sns, ssl, sf, shd, smo, sbf, swt, scp, sbr, sdz, ssw, snz, spr, sc];
 }
 
@@ -85,7 +87,7 @@ function computeRiskBreakdown(p, symLog) {
   const { prob: full } = predictRisk(p, symLog);
   const { prob: clin } = predictRisk(p, {});
   const symDelta = full - clin;
-  const ids = ['palp', 'hot_flashes', 'night_sweats', 'sleep', 'fatigue', 'headaches', 'mood', 'brain_fog', 'weight', 'dizziness', 'swelling', 'periods'];
+  const ids = ['palp', 'chest_pain', 'breathless', 'hot_flashes', 'night_sweats', 'sleep', 'fatigue', 'headaches', 'mood', 'brain_fog', 'weight', 'dizziness', 'swelling', 'nausea', 'periods'];
   const contributing = [];
   ids.forEach(id => {
     const e = symLog[id] || {};
