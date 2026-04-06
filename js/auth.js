@@ -101,7 +101,7 @@ async function enterApp(user) {
 
   // Load profile
   const { data: prof } = await _supabaseClient
-    .from('profiles').select('*').eq('id', user.id).single();
+    .from('profiles').select('*').eq('id', user.id).maybeSingle();
 
   if (prof) {
     profile = {
