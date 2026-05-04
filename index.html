@@ -26,49 +26,35 @@
           <span class="brand-sub">CardioAI Companion</span>
         </div>
       </div>
-      <div class="login-tabs">
-        <button class="login-tab active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
-        <button class="login-tab" id="tabSignup" onclick="switchAuthTab('signup')">Create Account</button>
+      <div style="margin-bottom:1.6rem">
+        <div style="font-size:1rem;font-weight:800;color:var(--text)">Sign In to PeriAI</div>
+        <div style="font-size:0.78rem;color:var(--text-lt);margin-top:0.2rem">Enter your credentials to continue</div>
       </div>
       <div id="loginError" class="login-error"></div>
-      <!-- Sign In form -->
       <div id="formLogin">
         <div class="login-field">
-          <label>Email</label>
-          <input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email"
+          <label>User ID</label>
+          <input type="text" id="loginEmail" placeholder="PeriAI User ID" autocomplete="username"
             onkeydown="if(event.key==='Enter')document.getElementById('loginPassword').focus()">
         </div>
         <div class="login-field">
           <label>Password</label>
-          <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password"
-            onkeydown="if(event.key==='Enter')doLogin()">
+          <div style="position:relative">
+            <input type="password" id="loginPassword" placeholder="peri1234" autocomplete="current-password"
+              onkeydown="if(event.key==='Enter')doLogin()"
+              style="width:100%;padding-right:2.5rem;box-sizing:border-box">
+            <span onclick="togglePwd('loginPassword','eyeLogin')" id="eyeLogin" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);
+            cursor:pointer;font-size:1.1rem;color:var(--text-lt);user-select:none">👁</span>
+          </div>
         </div>
-        <button class="login-btn" onclick="doLogin()">Sign In</button>
-      </div>
-      <!-- Sign Up form -->
-      <div id="formSignup" style="display:none">
-        <div class="login-field">
-          <label>Your Name</label>
-          <input type="text" id="signupName" placeholder="First name">
-        </div>
-        <div class="login-field">
-          <label>Email</label>
-          <input type="email" id="signupEmail" placeholder="you@email.com" autocomplete="email">
-        </div>
-        <div class="login-field">
-          <label>Password <span style="font-weight:500;color:var(--text-lt)">(min. 6 characters)</span></label>
-          <input type="password" id="signupPassword" placeholder="Create a password" autocomplete="new-password">
-        </div>
-        <div class="login-field">
-          <label>Confirm Password</label>
-          <input type="password" id="signupConfirm" placeholder="Repeat your password" autocomplete="new-password"
-            onkeydown="if(event.key==='Enter')doSignup()">
-        </div>
-        <button class="login-btn" onclick="doSignup()">Create Account</button>
+        <button class="login-btn" id="loginSubmitBtn" onclick="doLogin()">Sign In</button>
       </div>
     </div>
   </div>
 
+
+
+  <!-- HEADER -->
   <!-- HEADER -->
   <header class="topbar">
     <div class="logo-wrap" onclick="goTo('home')">
@@ -77,29 +63,31 @@
         <div class="logo-tagline">Cardiovascular Companion</div>
       </div>
     </div>
+
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tab-home" onclick="goTo('home')">Home</button>
+      <button class="tab-btn" id="tab-about" onclick="goTo('about')">Cardio Symptoms</button>
+      <button class="tab-btn" id="tab-profile" onclick="goTo('profile')">My Profile</button>
+      <button class="tab-btn" id="tab-ai" onclick="goTo('ai')">Talk to Peri</button>
+      <button class="tab-btn" id="tab-log" onclick="goTo('log')">Symptom Log</button>
+      <button class="tab-btn" id="tab-reports" onclick="goTo('reports')">Reports</button>
+      <button class="tab-btn" id="tab-risk" onclick="goTo('risk')">Risk Analysis</button>
+    </nav>
+
+    <div class="nav-right">
+      <div class="session-pill">
+        <div class="rec-dot" id="recDot"></div>
+        <span id="sessionTimer">00:00</span>
+      </div>
+      <div id="userPill" style="display:none;align-items:center;gap:0.5rem;font-size:0.78rem;font-weight:800;
+        color:var(--text-m);background:var(--cream);border:1.5px solid var(--border);
+        border-radius:50px;padding:0.35rem 0.9rem 0.35rem 0.7rem;cursor:default">
+      </div>
+      <button class="btn-sm-s" style="font-size:0.75rem;padding:0.4rem 0.9rem" onclick="doLogout()">Sign Out</button>
+      <button class="btn-cta" onclick="goTo('ai')">Start Session</button>
+    </div>
   </header>
 
-
-  <nav class="nav-tabs">
-    <button class="tab-btn active" id="tab-home" onclick="goTo('home')">Home</button>
-    <button class="tab-btn" id="tab-about" onclick="goTo('about')">Cardio Symptoms</button>
-    <button class="tab-btn" id="tab-profile" onclick="goTo('profile')">My Profile</button>
-    <button class="tab-btn" id="tab-ai" onclick="goTo('ai')">Talk to Peri</button>
-    <button class="tab-btn" id="tab-log" onclick="goTo('log')">Symptom Log</button>
-    <button class="tab-btn" id="tab-reports" onclick="goTo('reports')">Reports</button>
-    <button class="tab-btn" id="tab-risk" onclick="goTo('risk')">Risk Analysis</button>
-  </nav>
-  <div class="nav-right">
-    <div class="session-pill">
-      <div class="rec-dot" id="recDot"></div>
-      <span id="sessionTimer">00:00</span>
-    </div>
-    <div id="userPill"
-      style="display:none;align-items:center;gap:0.5rem;font-size:0.78rem;font-weight:800;color:var(--text-m);background:var(--cream);border:1.5px solid var(--border);border-radius:50px;padding:0.35rem 0.9rem 0.35rem 0.7rem;cursor:default">
-    </div>
-    <button class="btn-sm-s" style="font-size:0.75rem;padding:0.4rem 0.9rem" onclick="doLogout()">Sign Out</button>
-    <button class="btn-cta" onclick="goTo('ai')">Start Session</button>
-  </div>
 
   <!-- APP BODY -->
   <div id="app">
