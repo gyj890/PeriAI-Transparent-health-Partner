@@ -25,54 +25,28 @@ function clearAuthError() {
   if (el) { el.textContent = ''; el.style.display = 'none'; }
 }
 
-function switchAuthTab(tab) {
-  clearAuthError();
-  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
-  document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
-  document.getElementById('formLogin').style.display = tab === 'login' ? '' : 'none';
-  document.getElementById('formSignup').style.display = tab === 'signup' ? '' : 'none';
-}
 
-// ── SIGN UP ─────────────────────────────────────────────────
-async function doSignup() {
-  clearAuthError();
-  const name = (document.getElementById('signupName').value || '').trim();
-  const email = (document.getElementById('signupEmail').value || '').trim().toLowerCase();
-  const pass = document.getElementById('signupPassword').value;
-  const confirm = document.getElementById('signupConfirm').value;
 
-  if (!name) { showAuthError('Please enter your name.'); return; }
-  if (!email || !email.includes('@')) { showAuthError('Please enter a valid email address.'); return; }
-  if (pass.length < 6) { showAuthError('Password must be at least 6 characters.'); return; }
-  if (pass !== confirm) { showAuthError('Passwords do not match.'); return; }
-
-  setBtnState('signupSubmitBtn', true, 'Creating account…');
-
-  const { data, error } = await _supabaseClient.auth.signUp({
-    email,
-    password: pass,
-    options: { data: { name } }
-  });
-
-  setBtnState('signupSubmitBtn', false, 'Create Account');
-
-  if (error) { showAuthError(error.message); return; }
-
-  if (data.session) {
-    // Email confirmation OFF — logged in immediately
-    await enterApp(data.user);
+// ── PASSWORD TOGGLE ───────────────────────
+function togglePwd(inputId, eyeId) {
+  const input = document.getElementById(inputId);
+  const eye = document.getElementById(eyeId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    eye.textContent = '🙈';
   } else {
-    // Email confirmation ON — ask user to check inbox
-    showSuccess('Account created! Check your email for a confirmation link, then sign in.');
+    input.type = 'password';
+    eye.textContent = '👁';
   }
 }
 
 // ── SIGN IN ─────────────────────────────────────────────────
 async function doLogin() {
   clearAuthError();
-  const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
+  const userIdRaw = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
+  const email = userIdRaw.includes('@') ? userIdRaw : `${userIdRaw}@periai.app`;
   const pass = document.getElementById('loginPassword').value;
-  if (!email || !pass) { showAuthError('Please enter your email and password.'); return; }
+  if (!userIdRaw || !pass) { showAuthError('Please enter your User ID and password.'); return; }
 
   setBtnState('loginSubmitBtn', true, 'Signing in…');
 
