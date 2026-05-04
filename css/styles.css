@@ -67,7 +67,7 @@ body::before {
   align-items: center;
   gap: 0;
   height: 68px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .logo-wrap {
@@ -124,12 +124,13 @@ body::before {
   text-transform: uppercase;
 }
 
-.nav-tabs {
-  display: flex;
+.nav-tabs::-webkit-scrollbar {
+  display: none;
   align-items: center;
   height: 68px;
   gap: 0.1rem;
-  flex: 1;
+  flex-shrink: 1;
+  min-width: 0;
   overflow-x: auto;
   /* ← allows scrolling on small screens */
   scrollbar-width: none;
@@ -144,7 +145,7 @@ body::before {
   border: none;
   background: transparent;
   font-family: 'Nunito', sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-m);
   cursor: pointer;
