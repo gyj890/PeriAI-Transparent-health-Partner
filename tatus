@@ -1,0 +1,35 @@
+[33m7af05a5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix: add predict.js script tag to index.html
+[33mcee9458[m Fix: update predict.js with cardiovascular symptom IDs
+[33m340ef3e[m Fix: remove api folder
+[33m5641db6[m changed the file name from predict.py to predict.js
+[33m7968adf[m Fix: RLS policies + buildAndGoReport function
+[33m9ca05fe[m Fix: close sec-reports div, remove predict.py script
+[33m13793f5[m Fix: close sec-reports div, remove predict.py script
+[33m0c3dc44[m Fix: navbar alignment nav-right pushed to right
+[33m087afd0[m Fix: declare currentUser global
+[33m4eee12a[m Initial commit - PeriAI app
+[33m65d9472[m Fix header structure and tagline
+[33m81fe081[m Clean HTML layout and logo assets
+[33mae14735[m Update logo header and Supabase config
+[33m77025e0[m Clean merge markers in index.html
+[33ma3734d2[m Merge branch 'main' of https://github.com/gyj890/PeriAI-Transparent-health-Partner
+[33m3626498[m Configure Supabase URL and anon key
+[33medb8d82[m Update index.html
+[33me91b1b8[m Delete vercel.json
+[33ma1e8a50[m Update auth.js
+[33m104aa2c[m Create vercel.json
+[33m6ad2403[m Rename cardio_model.js to predict.py
+[33m78072ca[m Rename cardio_model.js to cardio_model.js
+[33m8f0590e[m Rename auth.js to auth.js
+[33m54b0e51[m Rename symptoms_log.js to symptoms_log.js
+[33mf1e59ba[m Rename symptoms.js to symptoms.js
+[33ma6e5cb8[m Rename session.js to session.js
+[33m1ead3ca[m Rename reports.js to reports.js
+[33mf5738de[m Rename profile.js to profile.js
+[33mbb09fcf[m Rename app.js to app.js
+[33m456ccfc[m Add files via upload
+[33m96839fa[m Add files via upload
+[33m3d737de[m Add files via upload
+[33me05b123[m Create gitignore
+[33md20c456[m Update README.md
+[33mc031315[m Initial commit
