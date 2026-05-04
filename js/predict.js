@@ -12,7 +12,16 @@ const MODEL_PERFORMANCE = {
   logistic_regression: { accuracy: 0.9579, roc_auc: 0.9763, cv_roc_mean: 0.9765, cv_roc_std: 0.0009 }
 };
 
-const ML_FEATURE_NAMES = ['age', 'gender', 'height', 'weight', 'bmi', 'ap_hi', 'ap_lo', 'cholesterol', 'gluc', 'smoke', 'alco', 'active', 'pp', 'map_press', 'bp_stage', 'age_x_bmi', 'age_x_bp', 'chol_gluc', 'sym_palp', 'sym_hot_flashes', 'sym_night_sweats', 'sym_sleep', 'sym_fatigue', 'sym_headaches', 'sym_mood', 'sym_brain_fog', 'sym_weight', 'sym_chest_pain', 'sym_breathless', 'sym_nausea', 'sym_dizziness', 'sym_swelling', 'sym_periods', 'sym_composite'];
+const ML_FEATURE_NAMES = ['age', 'gender', 'height', 'weight', 'bmi',
+  'ap_hi', 'ap_lo', 'cholesterol', 'gluc',
+  'smoke', 'alco', 'active',
+  'pp', 'map_press', 'bp_stage',
+  'age_x_bmi', 'age_x_bp', 'chol_gluc',
+  'sym_palp', 'sym_hot_flashes', 'sym_night_sweats',
+  'sym_sleep', 'sym_fatigue', 'sym_headaches',
+  'sym_mood', 'sym_brain_fog', 'sym_weight',
+  'sym_chest_pain', 'sym_breathless',
+  'sym_periods', 'sym_composite'];
 
 // Trained LR coefficients on standardised features (56k train records)
 const LR_COEF = [1.241076, 0.063829, 0.034447, 0.057967, 0.050317, 0.645847, 0.533804, 0.831885, 0.380826, 0.299398, 0.100167, -0.317500, 0.435152, 0.608042, 0.008512, 1.088325, 0.928678, 0.124611, 0.307458, 0.169658, 0.029717, 0.027224, -0.021710, 0.011990, 0.032299, 0.011841, 0.025431, 0.035481, 0.018303, 0.102635, 0.324237];
@@ -68,7 +77,7 @@ function buildMLFeatureVector(p, symLog) {
   const sc = 0.35 * sp + 0.20 * scp + 0.15 * sbr + 0.12 * sdz + 0.10 * ssw
     + 0.08 * snz + 0.18 * shf + 0.14 * sns + 0.12 * ssl + 0.10 * sf
     + 0.08 * shd + 0.06 * smo + 0.06 * sbf + 0.05 * swt + 0.04 * spr;
-  return [age, gen, ht, wt, bmi, apH, apL, chol, gluc, smk, alc, act, pp, mp, bps, age * bmi, age * bps, chol * gluc, sp, shf, sns, ssl, sf, shd, smo, sbf, swt, scp, sbr, sdz, ssw, snz, spr, sc];
+  return [age, gen, ht, wt, bmi, apH, apL, chol, gluc, smk, alc, act, pp, mp, bps, age * bmi, age * bps, chol * gluc, sp, shf, sns, ssl, sf, shd, smo, sbf, swt, scp, sbr, spr, sc];
 }
 
 function standardiseFeatures(fv) {
@@ -198,7 +207,7 @@ function buildExplanation(clinProb, symDelta, fullProb, cfg, p, contributing, is
       : 'Your cholesterol is in the normal range.';
   const topSym = contributing.slice(0, 3).map(c => c.name).join(', ');
   const symNote = contributing.length > 0
-    ? `Your symptom log contributed ${sp} percentage points to your final score. Top symptoms: ${topSym}. Palpitations (LR coef 0.307, GB importance 1.1%) and hot flashes (LR coef 0.170, 0.4%) carry the highest symptom weights in the trained model.`
+    ? `Your symptom log contributed ${sp} percentage points to your final score. Top symptoms: ${topSym}. Chest pain (GB importance 0.9%), palpitations (GB importance 1.1%), and breathlessness (GB importance 0.7%) carry the highest cardiovascular weights in the trained model.`
     : 'No symptoms logged yet. Use Peri to log symptoms and see how they shift your personalised risk score.';
   const threshNote = isAboveThresh
     ? `<div style="background:var(--blush-lt);border:1.5px solid var(--blush);border-radius:10px;padding:0.8rem 1rem;margin-top:1rem;font-size:0.79rem;font-weight:700;color:#A02030">⚠ Score exceeds the model's optimal threshold (${Math.round(OPTIMAL_THRESHOLD * 100)}%, Youden's J). Model classifies as: <em>elevated cardiovascular risk</em>. Please discuss with your doctor.</div>`
