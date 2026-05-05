@@ -124,16 +124,21 @@ body::before {
   text-transform: uppercase;
 }
 
-.nav-tabs::-webkit-scrollbar {
-  display: none;
+.nav-tabs {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   height: 68px;
   gap: 0.1rem;
-  flex-shrink: 1;
+  flex: 1;
   min-width: 0;
   overflow-x: auto;
-  /* ← allows scrolling on small screens */
   scrollbar-width: none;
+  flex-wrap: nowrap;
+}
+
+.nav-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-btn {
